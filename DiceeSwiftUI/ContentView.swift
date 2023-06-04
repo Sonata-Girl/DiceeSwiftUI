@@ -9,13 +9,44 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        ZStack {
+            Image("GreenBackground").resizable()
+                .frame(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height)
+                .edgesIgnoringSafeArea(.all)
+            VStack {
+                Image("DiceeLogo")
+                    .imageScale(.large)
+                    .foregroundColor(.accentColor)
+                Spacer()
+                HStack {
+                    DiceeView(imageName: "One")
+                    DiceeView(imageName: "Two")
+                }.padding(.horizontal)
+                Button(action: {
+                    
+                }) {
+                    Text("Roll")
+                        .font(.system(size: 50))
+                        .fontWeight(.heavy)
+                        .foregroundColor(.white)
+                        .padding(.horizontal)
+                }
+                .background(Color.red)
+                .cornerRadius(30)
+            }
         }
         .padding()
+    }
+}
+
+struct DiceeView: View {
+    
+    let imageName: String
+    
+    var body: some View {
+        Image("Dice\(imageName)")
+            .resizable()
+            .aspectRatio(1, contentMode: .fit)
     }
 }
 
@@ -24,3 +55,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
