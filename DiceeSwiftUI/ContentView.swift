@@ -8,22 +8,28 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var leftDiceNum = 1
+    @State var rightDiceNum = 5
+    
     var body: some View {
         ZStack {
             Image("GreenBackground").resizable()
                 .frame(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height)
-                .edgesIgnoringSafeArea(.all)
+                .ignoresSafeArea()
             VStack {
                 Image("DiceeLogo")
                     .imageScale(.large)
                     .foregroundColor(.accentColor)
                 Spacer()
                 HStack {
-                    DiceeView(imageName: "One")
-                    DiceeView(imageName: "Two")
+                    DiceeView(imageNum: leftDiceNum)
+                    DiceeView(imageNum: rightDiceNum)
                 }.padding(.horizontal)
+                Spacer()
                 Button(action: {
-                    
+                    leftDiceNum = Int.random(in: 1...6)
+                    rightDiceNum = Int.random(in: 1...6)
                 }) {
                     Text("Roll")
                         .font(.system(size: 50))
@@ -32,21 +38,37 @@ struct ContentView: View {
                         .padding(.horizontal)
                 }
                 .background(Color.red)
-                .cornerRadius(30)
+                .cornerRadius(20)
             }
+            .padding(50)
         }
-        .padding()
     }
 }
 
 struct DiceeView: View {
     
-    let imageName: String
-    
+    var imageNum: Int
+   
     var body: some View {
+        let imageName = convertNumber(num: imageNum)
+
         Image("Dice\(imageName)")
             .resizable()
             .aspectRatio(1, contentMode: .fit)
+    }
+    
+    func convertNumber(num: Int) -> String {
+        var numString = ""
+        switch num {
+        case 1: numString = "One"
+        case 2: numString = "Two"
+        case 3: numString = "Three"
+        case 4: numString = "Four"
+        case 5: numString = "Five"
+        case 6: numString = "Six"
+        default : numString = "none"
+        }
+        return numString
     }
 }
 
